@@ -144,10 +144,6 @@ h5 {
   box-sizing: border-box;
   border: 1px solid #ccc;
   text-align: center;
-  overflow: hidden;
-  appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
 }
 
 .submit-btn {
