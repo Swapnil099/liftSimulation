@@ -1,5 +1,7 @@
 * {
-  font-family: Arial, sans-serif;
+  font-family: "Poppins", sans-serif;
+  font-weight: 300;
+  line-height: 1.75;
   box-sizing: border-box;
   margin: 0px;
   padding: 0px;
@@ -16,6 +18,14 @@ h1 {
   text-align: center;
 }
 
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-weight: bold;
+}
+
 .lifts-wrapper {
   display: flex;
   flex-direction: row;
@@ -29,7 +39,7 @@ h1 {
   width: 150px;
   flex-grow: 1;
   background-color: aquamarine;
-  margin: 0rem 0.5rem;
+  background-image: url("/img/building_bg_copy.jpg");
   padding: 0.5rem;
   display: flex;
   justify-content: space-between;
@@ -43,22 +53,26 @@ h1 {
 .lift {
   width: 80%;
   height: 50px;
-  border-radius: 0.5rem;
+  border-radius: 0.2rem;
   margin-left: auto;
   max-width: 80%;
-  background-color: rgb(182, 176, 216);
-  border: 1px solid black;
+  border: 2px solid #f0ff00;
+  box-shadow: 3px 5px 4px 0px rgba(0, 0, 0, 0.1);
 }
 
 .lift-door {
-  background-color: rgb(131, 100, 200);
+  background: linear-gradient(
+    rgba(255, 255, 255, 0.5),
+    rgba(255, 255, 255, 0.963)
+  );
   width: 100%;
   height: 100%;
-  border-radius: 0.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .btn-column {
-  background-color: aquamarine;
   padding: 0.1rem;
 }
 
@@ -69,6 +83,15 @@ h1 {
   border-radius: 0.1rem;
   width: 1.5rem;
   height: 1.5rem;
+  cursor: pointer;
+  margin: 1px;
+  box-shadow: 3px 5px 4px 0px rgba(0, 0, 0, 0.1);
+}
+
+.btn-up:hover,
+.btn-down:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 /* pop up css  */
@@ -121,6 +144,10 @@ h1 {
   box-sizing: border-box;
   border: 1px solid #ccc;
   text-align: center;
+  overflow: hidden;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
 }
 
 .submit-btn {
@@ -192,42 +219,34 @@ select option {
 }
 
 @keyframes doorAnimation {
-  0%,
-  100% {
-    transform: translateX(0); /* Door closed */
+  0% {
+    width: 100%; /* Door closed */
   }
-  20% {
-    opacity: 0;
-  }
-  33.33% {
-    transform: translateX(-100%); /* Door sliding left */
-    opacity: 0;
-  }
-  50% {
-    transform: translateX(-100%); /* Door open, holding the state */
-    opacity: 0;
-  }
-  90% {
-    transform: translateX(-10%);
+  40%,
+  50%,
+  60% {
+    width: 0%; /* Door open */
   }
   100% {
-    transform: translateX(0); /* Close the door */
+    width: 100%; /* Door closed */
   }
 }
 
-@keyframes yellowBlink {
+@keyframes flash {
   0%,
+  50%,
   100% {
-    border-color: transparent;
+    opacity: 1;
   }
-  50% {
-    background-color: yellow;
+  25%,
+  75% {
+    opacity: 0.5;
   }
 }
 
-.yellow-blink {
-  border: 2px solid transparent; /* Set the initial border style */
-  animation: yellowBlink 2s infinite; /* Run the animation indefinitely for 1 second */
+.flash_animate {
+  /* Set the initial border style */
+  animation: flash 2s infinite; /* Run the animation indefinitely for 1 second */
 }
 
 .lift-open-close {
@@ -250,4 +269,65 @@ select option {
   .lift-wrapper {
     width: 30px;
   }
+}
+
+/* // navigation butoon css */
+.nav-button-container {
+  display: none;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  margin: 5px;
+}
+
+.go-back-button {
+  padding: 4px 9px;
+  background-color: #3498db;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 45px;
+  height: 28px;
+}
+
+.switch input {
+  display: none;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  border-radius: 34px;
+  transition: 0.4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 20px;
+  width: 20px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  border-radius: 50%;
+  transition: 0.4s;
+}
+
+input:checked + .slider {
+  background-color: #2196f3;
+}
+
+input:checked + .slider:before {
+  transform: translateX(16px);
 }

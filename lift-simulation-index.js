@@ -39,8 +39,9 @@ document
 
     generateLiftColumns(lifts, totalfloors);
     createLifts(totalfloors, lifts);
+    displayNavigationButtonToggle(true);
     document
-      .getElementById("destination-submit-btn")
+      .getElementById("multiselect")
       .addEventListener("click", submitForm);
   });
 
@@ -109,6 +110,11 @@ function generateLiftColumns(numLifts, numFloors) {
     liftDoor.classList.add("lift-door");
     liftDoor.id = "lift-door-id-" + liftIndex;
 
+    const floorNumberHTag = document.createElement("h4");
+    floorNumberHTag.id = "floor-number-h-tag-" + liftIndex;
+    floorNumberHTag.innerText = "G";
+    liftDoor.appendChild(floorNumberHTag);
+
     lift.appendChild(liftDoor);
 
     liftWrapper.appendChild(lift);
@@ -124,6 +130,8 @@ function generateLiftColumns(numLifts, numFloors) {
     if (numFloors - i == 0) newOption.textContent = "Ground Floor";
     document.getElementById("multiselect").appendChild(newOption);
   }
+
+  document.getElementById("multiselect").size = numFloors;
 
   let margin_top = getMarginTopForLiftLocation(numFloors);
   let liftDivs = document.getElementsByClassName("lift");
@@ -143,15 +151,6 @@ function submitForm() {
   // You can add logic to handle form submission here
   const selectElement = document.getElementById("multiselect");
   const destinationFloor = selectElement.value;
-  if (Number(destinationFloor) === currrentReqUserFloor) {
-    alert("You are already on the same floor");
-    closePopup();
-    return;
-  } else if (Number(destinationFloor) > totalfloors) {
-    alert("Please select a valid floor");
-    closePopup();
-    return;
-  }
   addToQueue(currrentReqUserFloor, destinationFloor);
   closePopup();
 }
@@ -168,6 +167,11 @@ function setCurrentFloor(event) {
   currrentReqUserFloor = Number(event.target.id);
   console.log("current floor set to : " + currrentReqUserFloor);
   console.log("Nearest lift set to : " + Number(event.target.classList[1]));
+}
+
+function displayNavigationButtonToggle(display) {
+  if (display) document.getElementById("nav-button").style.display = "flex";
+  else document.getElementById("nav-button").style.display = "none";
 }
 
 export function getMarginTopForLiftLocation(floor) {

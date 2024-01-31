@@ -12,9 +12,28 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Oxygen&family=Oxygen+Mono&family=Poppins:wght@300&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" href="/img/fevicon.png" type="image/x-icon">
   </head>
   <body>
     <div class="main-body" id="main-body">
+      <div class="nav-button-container" id="nav-button">
+        <button class="go-back-button" id="reset-button">
+          <i class="fa fa-arrow-left" aria-hidden="true"></i> Main Menu
+        </button>
+        <label class="switch">
+          <input type="checkbox" id="audioToggle" />
+          <span class="slider"></span>
+        </label>
+        <label for="audioToggle">Toggle Audio</label>
+      </div>
       <div class="lifts-wrapper" id="lifts-wrapper"></div>
 
       <!-- popup -->
@@ -24,9 +43,6 @@
           <div class="popup-content">
             <h2>Select Destination Floor</h2>
             <select class="multiselect" id="multiselect"></select>
-            <br />
-            <button class="submit-btn" id="destination-submit-btn">
-              Submit
             </button>
           </div>
         </div>
@@ -37,7 +53,6 @@
       <h1>Lift Simulation</h1>
       <form id="liftSimulationForm">
         <label for="numFloors">Number of Floors</label>
-        <br />
         <input
           type="number"
           id="numFloors"
@@ -50,7 +65,6 @@
         <br />
 
         <label for="numLifts">Number of Lifts</label>
-        <br />
         <input
           type="number"
           id="numLifts"
@@ -60,25 +74,18 @@
           max="10"
           value="4"
         />
-
         <br />
-
-        <label for="advancedSettings">Advanced Settings (Comming Soon)</label>
+        <label for="advancedSettings"><h4>Advanced Settings (Comming Soon)</h4></label>
         <input type="checkbox" id="advancedSettings" name="advancedSettings" />
-        <br />
         <div class="advanced-settings" id="advancedSettingsContainer">
           <label for="liftSpeed">Lift Speed (second/floor)</label>
-          <br />
           <select id="liftSpeed" name="liftSpeed">
             <option value="1">1</option>
             <option value="2" selected>2</option>
             <option value="3">3</option>
           </select>
-
-          <br />
-
+          <br>
           <label for="doorTime">Door Open/Close Time (seconds)</label>
-          <br />
           <select id="doorTime" name="doorTime">
             <option value="1">1</option>
             <option value="2" selected>2</option>
@@ -89,7 +96,6 @@
           <h3>Simulate lift breakdown scenario</h3>
           <br />
           <label for="breakdownFloor">Floor Number</label>
-          <br />
           <input
             type="number"
             id="breakdownFloor"
@@ -98,9 +104,7 @@
             max="10"
             value="0"
           />
-          <br />
           <label for="breakdownLiftNumber">Lift Number</label>
-          <br />
           <input
             type="number"
             id="breakdownLiftNumber"
@@ -110,12 +114,18 @@
             value="0"
           />
         </div>
-
         <br />
-
         <button type="submit" class="submit-btn">Submit</button>
       </form>
     </div>
+
+    <footer>
+      <a
+        href="https://www.freepik.com/free-vector/set-building-white-background_27175166.htm#query=svg%20building&position=33&from_view=keyword&track=ais&uuid=a7037425-8a1c-473a-8554-520c30c24bf9"
+        >Building SVG Image by brgfx</a
+      >
+      on Freepik
+    </footer>
 
     <script type="module" src="lift-simulation-index.js"></script>
     <script type="module" src="lift-logic.js"></script>

@@ -1,6 +1,8 @@
 import { getMarginTopForLiftLocation } from "./lift-simulation-index.js";
 
 let nearestLiftIndex = 1;
+let totalFloorsNum = 0;
+let isAudioEnabled = false;
 
 class Lift {
   constructor(id, currentFloorNum) {
@@ -36,6 +38,9 @@ class Lift {
 
     while (this.route.length > 0) {
       let nextStop = this.getNextStop();
+      let innerText = totalFloorsNum - this.currentFloor;
+      if (totalFloorsNum - this.currentFloor == 0) innerText = "G";
+
       if (this.currentFloor == nextStop) {
         console.log(
           this.id +
@@ -44,14 +49,20 @@ class Lift {
             " - doors will close in 2 seconds"
         );
         this.route.shift();
-        await new Promise((resolve) => setTimeout(resolve, 1000));
+        playFloorAnnouncement(innerText);
+        await new Promise((resolve) => setTimeout(resolve, 500));
         await addOpenCloseAnimation(this.id);
         // await new Promise((resolve) => setTimeout(resolve, 1000));
       } else {
         console.log(this.id + " : Curr Floor " + this.currentFloor);
-        await new Promise((resolve) => setTimeout(resolve, 2000));
+        await new Promise((resolve) => setTimeout(resolve, 1500));
       }
       if (this.route.length > 0) this.currentFloor += this.status;
+      innerText = totalFloorsNum - this.currentFloor;
+      if (totalFloorsNum - this.currentFloor == 0) innerText = "G";
+      document.getElementById("floor-number-h-tag-" + this.id).innerText =
+        innerText;
+      await new Promise((resolve) => setTimeout(resolve, 500));
     }
     this.status = 0;
   }
@@ -88,6 +99,7 @@ async function startTrip(liftId, floorNumber) {
 }
 
 export function createLifts(floors, numberOfLifts) {
+  totalFloorsNum = floors;
   lifts = [];
   queue = [];
   for (let i = 0; i < numberOfLifts; i++) {
@@ -211,9 +223,9 @@ async function assignLift(startFloor, destinationFloor) {
   if (lift.status === 0) {
     let liftDiv = document.getElementById("lift-id-" + liftId);
 
-    liftDiv.classList.add("yellow-blink");
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-    liftDiv.classList.remove("yellow-blink");
+    liftDiv.classList.add("flash_animate");
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    liftDiv.classList.remove("flash_animate");
 
     insertStop(liftId, startFloor);
     console.log(
@@ -226,17 +238,19 @@ async function assignLift(startFloor, destinationFloor) {
       " ease-in-out";
     await startTrip(liftId, startFloor);
 
-    insertStop(liftId, destinationFloor);
-    console.log(
-      "current floor of lift : " + liftId + " : " + lift.currentFloor
-    );
-    liftDiv.style.transition =
-      "margin-top " +
-      Math.abs(lift.currentFloor - destinationFloor) * 2 +
-      "s" +
-      " ease-in-out";
+    if (startFloor != destinationFloor) {
+      insertStop(liftId, destinationFloor);
+      console.log(
+        "current floor of lift : " + liftId + " : " + lift.currentFloor
+      );
+      liftDiv.style.transition =
+        "margin-top " +
+        Math.abs(lift.currentFloor - destinationFloor) * 2 +
+        "s" +
+        " ease-in-out";
 
-    await startTrip(liftId, destinationFloor);
+      await startTrip(liftId, destinationFloor);
+    }
   } else {
     insertStop(liftId, startFloor);
     insertStop(liftId, destinationFloor);
@@ -260,4 +274,35 @@ function isEqual(obj1, obj2) {
   }
 
   return true;
+}
+
+// audio controll
+document.getElementById("audioToggle").addEventListener("change", function () {
+  // Check if the checkbox is checked
+  if (isAudioEnabled) isAudioEnabled = false;
+  else isAudioEnabled = true;
+});
+
+function playFloorAnnouncement(floorNumber) {
+  if (!isAudioEnabled) return;
+  var fileName = floorNumber + ".mp3";
+  var audio = new Audio(`/audio/${fileName}`); // Adjust the path to your sound files
+  audio.play();
+}
+
+document.getElementById("reset-button").addEventListener("click", function () {
+  resetAndRenderMainMenu();
+});
+
+function resetAndRenderMainMenu() {
+  document.getElementById("lifts-wrapper").innerHTML = "";
+  document.getElementById("multiselect").innerHTML = "";
+  document.getElementById("input-form-wrapper").style.display = "flex";
+  document.getElementById("nav-button").style.display = "none";
+
+  nearestLiftIndex = 1;
+  totalFloorsNum = 0;
+  isAudioEnabled = false;
+  lifts = [];
+  queue = [];
 }
