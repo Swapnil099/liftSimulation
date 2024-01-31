@@ -278,6 +278,7 @@ function isEqual(obj1, obj2) {
 
 // audio controll
 document.getElementById("audioToggle").addEventListener("change", function () {
+  console.log("audio changed");
   // Check if the checkbox is checked
   if (isAudioEnabled) isAudioEnabled = false;
   else isAudioEnabled = true;
