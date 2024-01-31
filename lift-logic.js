@@ -302,7 +302,6 @@ function resetAndRenderMainMenu() {
 
   nearestLiftIndex = 1;
   totalFloorsNum = 0;
-  isAudioEnabled = false;
   lifts = [];
   queue = [];
 }
