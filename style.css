@@ -255,6 +255,11 @@ select option {
 
 @media (max-width: 600px) {
   /* Your styles for mobile or small-height devices go here */
+
+  .lift {
+    width: 100%;
+  }
+
   .lift-column {
     margin: 0px 3px;
     padding: 5px;
@@ -267,7 +272,7 @@ select option {
   }
 
   .lift-wrapper {
-    width: 30px;
+    width: 50px;
   }
 }
 

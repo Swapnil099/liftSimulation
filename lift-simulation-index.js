@@ -41,7 +41,7 @@ document
     createLifts(totalfloors, lifts);
     displayNavigationButtonToggle(true);
     document
-      .getElementById("multiselect")
+      .getElementById("destination-submit-btn")
       .addEventListener("click", submitForm);
   });
 
